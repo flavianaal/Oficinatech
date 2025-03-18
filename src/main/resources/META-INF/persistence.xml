@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence">
+  <persistence-unit name="oficinaTech" transaction-type="JTA">
+    <!-- Configuração do DataSource no Payara -->
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/oficinaTech</jta-data-source>
+    <!-- Lista de entidades -->
+    <class>io.programe.modelo.OrdemDeServico</class>
+    <class>io.programe.modelo.Veiculo</class>
+    <class>io.programe.modelo.Servico</class>
+    <class>io.programe.modelo.Cliente</class>
+    <class>io.programe.modelo.Endereco</class>
+    <properties>
+      <!-- Criação automática do banco de dados -->
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.logging.level" value="WARNING"/>
+    </properties>
+  </persistence-unit>
+</persistence>

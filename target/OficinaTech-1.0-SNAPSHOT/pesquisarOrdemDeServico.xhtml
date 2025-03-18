@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Oficina Tech</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="growl"/>
+            <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" />
+            </p:menubar>
+            <p:spacer height="20" />
+            <h:panelGroup id="pesquisarClientePanelGroup">
+                <div class="row">
+                    <h3>Pesquisar Serviço</h3>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Status: " for="status"/>
+                            <p:selectOneMenu id="status" value="#{managerOrdemDeServico.statusOrdemDeServico}"  converter="statusconverter">
+                                <f:selectItem itemLabel="-- Selecione um status --" itemValue="" />
+                                <f:selectItems value="#{managerOrdemDeServico.statusOrdemServico}" var="status" 
+                                               itemLabel="#{status.statusOrdem}" itemValue="#{status}" />
+
+                            </p:selectOneMenu>
+
+                        </div>
+                    </div>
+
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Cliente: "/>
+                            <p:inputText value="#{managerOrdemDeServico.cliente.nome}"/> 
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <center style="margin: 10px">
+                <p:commandButton value="Pesquisar" actionListener="#{managerOrdemDeServico.pesquisar()}" icon="pi pi-search" update="form"/>
+                <p:spacer width="30"/>
+                <p:commandButton value="Limpar" actionListener="#{managerOrdemDeServico.instanciar()}" icon="pi pi-eraser" update="tablePanelGroup form"/>
+            </center>
+            <h:panelGroup id="tablePanelGroup">
+                <p:dataTable value="#{managerOrdemDeServico.listaOrdensServico}" var="ordem" rows="10" paginator="true"
+                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="5, 10, 20" emptyMessage="Nenhum registro encontrado." styleClass="my-md-3">
+
+                    <!-- Coluna de Ações -->
+                    <p:column headerText="Ações">
+                        <p:button icon="pi pi-pencil" title="Editar ordem" href="cadastrarOrdemDeServico.xhtml?editar=#{ordem.id}"/>
+                        <p:spacer height="30" />
+                        <p:commandButton action="#{managerOrdemDeServico.remover(ordem)}"
+                                         icon="pi pi-trash"
+                                         styleClass="ui-button-danger"
+                                         update="form">
+                            <p:confirm message="Deseja excluir essa ordem de serviço?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+
+
+                        <p:confirmDialog global="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                        </p:confirmDialog>
+
+
+                    </p:column>
+                    <p:column headerText="Nome do Cliente" >
+                        <p:outputLabel value="#{ordem.cliente.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Veiculo" >
+                        <p:outputLabel value="#{ordem.veiculo.modelo}" />
+                    </p:column>
+
+                    <p:column headerText="Data de Entrada" >
+                        <p:outputLabel value="#{ordem.dataEntrada}" />
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <p:outputLabel value="#{ordem.status}" />
+                    </p:column>
+
+                    <p:column headerText="Valor Total(R$)">
+                        <p:outputLabel value="R$ #{ordem.valorTotal}"/>
+                    </p:column>
+
+
+
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+</html>

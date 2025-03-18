@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Oficina Tech</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="growl"/>
+            <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" />
+            </p:menubar>
+            <p:spacer height="20" />
+            <h:panelGroup id="pesquisarVeiculoPanelGroup">
+                <div class="row">
+                    <h3>Pesquisar Veiculo</h3>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Placa: "/>
+                            <p:inputMask mask="AAA999" value="#{managerVeiculo.veiculo.placa}"/> 
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Modelo: "/>
+                            <p:inputText value="#{managerVeiculo.veiculo.modelo}"/> 
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <center style="margin: 10px">
+                <p:commandButton value="Pesquisar" actionListener="#{managerVeiculo.pesquisar()}" icon="pi pi-search" update="form"/>
+                <p:spacer width="30"/>
+                <p:commandButton value="Limpar" actionListener="#{managerVeiculo.instanciar()}" icon="pi pi-eraser" update="tablePanelGroup form"/>
+            </center>
+            <h:panelGroup id="tablePanelGroup">
+                <p:dataTable value="#{managerVeiculo.veiculos}" var="veiculo" rows="10" paginator="true"
+                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="5, 10, 20" emptyMessage="Nenhum registro encontrado." styleClass="my-md-3">
+
+                    <!-- Coluna de Ações -->
+                    <p:column headerText="Ações">
+                        <p:button icon="pi pi-pencil" title="Editar Veiculo" href="cadastrarVeiculo.xhtml?editar=#{veiculo.id}"/>
+                        <p:spacer height="30" />
+                        <p:commandButton action="#{managerVeiculo.remover(veiculo)}"
+                                         icon="pi pi-trash"
+                                         styleClass="ui-button-danger"
+                                         update="form">
+                            <p:confirm message="Deseja excluir o cliente #{veiculo.modelo}?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                        </p:confirmDialog>
+                    </p:column>
+
+                    <p:column headerText="Placa" >
+                        <p:outputLabel value="#{veiculo.placa}" />
+                    </p:column>
+
+                    <p:column headerText="Modelo">
+                        <p:outputLabel value="#{veiculo.modelo}" />
+                    </p:column>
+
+                    <p:column headerText="Ano" >
+                        <p:outputLabel value="#{veiculo.anoCarro}" />
+                    </p:column>
+
+                    <p:column headerText="Nome do Cliente" >
+                        <p:outputLabel value="#{veiculo.cliente.nome}" />
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+</html>

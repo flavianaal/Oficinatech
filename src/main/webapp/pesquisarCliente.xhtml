@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Oficina Tech</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="growl"/>
+            <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" />
+            </p:menubar>
+            <p:spacer height="20" />
+            <h:panelGroup id="pesquisarClientePanelGroup">
+                <div class="row">
+                    <h3>Pesquisar Cliente</h3>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Nome: " for="nome"/>
+                            <p:inputText id="nome" value="#{managerCliente.cliente.nome}" styleClass="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <center style="margin: 10px">
+                <p:commandButton value="Pesquisar" actionListener="#{managerCliente.pesquisar()}" icon="pi pi-search" update="form"/>
+                <p:spacer width="30"/>
+                <p:commandButton value="Limpar" actionListener="#{managerCliente.instanciar()}" icon="pi pi-eraser" update="tablePanelGroup form"/>
+            </center>
+            <h:panelGroup id="tablePanelGroup">
+                <p:dataTable value="#{managerCliente.clientes}" var="cliente" rows="10" paginator="true"
+                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="5, 10, 20" emptyMessage="Nenhum registro encontrado." styleClass="my-md-3">
+
+                    <!-- Coluna de Ações -->
+                    <p:column headerText="Ações">
+                        <p:button icon="pi pi-pencil" title="Editar Cliente" href="cadastrarCliente.xhtml?editar=#{cliente.id}"/>
+                        <p:spacer height="30" />
+                        <p:commandButton action="#{managerCliente.remover(cliente)}"
+                                         icon="pi pi-trash"
+                                         styleClass="ui-button-danger"
+                                         update="form">
+                            <p:confirm message="Deseja excluir o cliente #{cliente.nome}?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                        </p:confirmDialog>
+
+
+                    </p:column>
+
+                    <p:column headerText="Nome" >
+                        <p:outputLabel value="#{cliente.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Telefone">
+                        <p:outputLabel value="#{cliente.telefone}" />
+                    </p:column>
+
+                    <p:column headerText="Email" >
+                        <p:outputLabel value="#{cliente.email}" />
+                    </p:column>
+
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{cliente.tipo eq 'F' ? 'Física' : 'Jurídica'}" />
+                    </p:column>
+
+                    <p:column headerText="CPF" >
+                        <h:outputText value="#{cliente.tipo eq 'F' ? cliente.CPF : ''}" />
+                    </p:column>
+
+                    <p:column headerText="CNPJ">
+                        <h:outputText value="#{cliente.tipo eq 'J' ? cliente.CNPJ : ''}" />
+                    </p:column>
+
+                    <p:column headerText="Razão Social" >
+                        <h:outputText value="#{cliente.tipo eq 'J' ? cliente.razaoSocial : ''}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+</html>
