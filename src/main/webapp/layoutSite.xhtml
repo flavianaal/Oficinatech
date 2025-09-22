@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <title><ui:insert name="titulo">Oficina Tech</ui:insert></title>
+
+        <!-- Estilos -->
+        <h:outputStylesheet library="vendor/fontawesome-free/css" name="all.min.css"/>
+        <h:outputStylesheet name="webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css"/>
+    </h:head>
+
+    <!-- Aqui vai o conteúdo dinâmico -->
+    <h:body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.xhtml">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-laugh-wink"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">Oficina Tech</div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0"/>
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Cadastro
+                </div>
+                <!-- Menu de Cadastro -->
+
+                <li class="nav-item">
+
+                    <!-- Nav Item - Cadastrar Cliente -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastrarCliente.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Cadastrar Cliente</span></a>
+                    </li>
+                    <!-- Nav Item - Cadastrar Cliente -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastrarVeiculo.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Cadastrar Veiculo</span></a>
+                    </li>
+                    <!-- Nav Item - Cadastrar Cliente -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastrarServico.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Cadastrar Serviço</span></a>
+                    </li>
+                    <!-- Nav Item - Cadastrar Cliente -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastrarOrdemDeServico.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Cadastrar Ordem de Serviço</span></a>
+                    </li>
+
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider"/>
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Pesquisar Informações
+                </div>
+
+                <li class="nav-item">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="pesquisarCliente.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Pesquisar Cliente</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pesquisarVeiculo.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Pesquisar Veiculo</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pesquisarOrdemDeServico.xhtml">
+                            <i class="fas fa-fw fa-chart-area"></i>
+                            <span>Pesquisar Ordem de Serviço</span></a>
+                    </li>
+                </li>
+
+            </ul>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                        <ui:insert name="conteudo"/>
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <ui:insert name="footer">
+                    <!-- Conteúdo padrão do footer, ou pode ser substituído -->
+                    <div class="container my-auto  mt-10">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright Desenvolvido por Flaviana Andrade 2025</span>
+                        </div>
+                    </div>
+                </ui:insert>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+
+        <!-- Scripts -->
+        <h:outputScript library="vendor/jquery" name="jquery.min.js"/>
+        <h:outputScript library="vendor/bootstrap/js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript name="webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"/>
+        <h:outputScript library="vendor/jquery-easing" name="jquery.easing.min.js"/>
+        <h:outputScript library="js" name="sb-admin-2.min.js"/>
+        <h:outputScript library="vendor/chart.js" name="Chart.min.js"/>
+        <h:outputScript library="js/demo" name="chart-area-demo.js"/>
+        <h:outputScript library="js/demo" name="chart-pie-demo.js"/>
+    </h:body>
+
+</html>

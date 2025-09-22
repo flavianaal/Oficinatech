@@ -1,13 +1,15 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Oficina Tech</title>
-    </h:head>
-    <h:body>
+<ui:composition template="layoutSite.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="cabecalho">
+        Cadastro de Clientes
+    </ui:define>
+
+    <ui:define name="conteudo">
         <h:form id="form">
             <p:growl id="growl"/>
             <p:menubar>
@@ -16,7 +18,7 @@
             <p:spacer height="20" />
             <h:panelGroup id="pesquisarClientePanelGroup">
                 <div class="row">
-                    <h3>Pesquisar Serviço</h3>
+                    <h3>Pesquisar Ordem de Serviço</h3>
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Status: " for="status"/>
@@ -75,6 +77,7 @@
                     <p:column headerText="Veiculo" >
                         <p:outputLabel value="#{ordem.veiculo.modelo}" />
                     </p:column>
+                  
 
                     <p:column headerText="Data de Entrada" >
                         <p:outputLabel value="#{ordem.dataEntrada}" />
@@ -87,6 +90,10 @@
                     <p:column headerText="Valor Total(R$)">
                         <p:outputLabel value="R$ #{ordem.valorTotal}"/>
                     </p:column>
+                    
+                    <p:column headerText="Observações">
+                        <p:outputLabel value="#{ordem.observacoes}"/>
+                    </p:column>
 
 
 
@@ -94,5 +101,5 @@
             </h:panelGroup>
 
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

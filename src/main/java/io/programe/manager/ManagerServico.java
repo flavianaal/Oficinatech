@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package io.programe.manager;
 
 import io.programe.modelo.Servico;
 import io.programe.servico.ServicoServico;
 import io.programe.util.Mensagem;
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -20,45 +17,85 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author Flaviana Andrade
- */
 @Named
 @ViewScoped
-@ToString
-@EqualsAndHashCode
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class ManagerServico implements Serializable {
 
+    // ======= DEPENDÊNCIAS =======
     @EJB
-    ServicoServico servicoServico;
+    private ServicoServico servicoServico;
 
+    // ======= ENTIDADES E LISTAS =======
     private Servico servico;
     private List<Servico> servicos;
-  
 
+    // ======= CAMPOS AUXILIARES PARA TEMPO ESTIMADO =======
+    private int dias;
+    private int horas;
+    private int minutos;
+
+    // ======= MÉTODO POSTCONSTRUCT =======
     @PostConstruct
     public void instanciar() {
-        servicos = servicoServico.listar();
+        carregarListaServicos();
+        inicializarServico();
+    }
 
+    private void carregarListaServicos() {
+        servicos = servicoServico.listar();
+    }
+
+    private void inicializarServico() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         String visualizar = params.get("visualizar");
         String editar = params.get("editar");
 
         if (visualizar != null) {
             servico = servicoServico.find(Long.parseLong(visualizar));
+            carregarTempoEstimado();
         } else if (editar != null) {
             servico = servicoServico.find(Long.parseLong(editar));
+            carregarTempoEstimado();
         } else {
             servico = new Servico();
+            resetarTempoAuxiliar();
         }
-
     }
 
+    // ======= MÉTODOS AUXILIARES DE TEMPO =======
+
+    private void carregarTempoEstimado() {
+        Duration d = servico.getTempoEstimadoDuration();
+        if (!d.isZero()) {
+            dias = (int) d.toDays();
+            horas = (int) (d.toHours() % 24);
+            minutos = (int) (d.toMinutes() % 60);
+        } else {
+            resetarTempoAuxiliar();
+        }
+    }
+
+    private void resetarTempoAuxiliar() {
+        dias = 0;
+        horas = 0;
+        minutos = 0;
+    }
+
+    private void atualizarTempoEstimado() {
+        Duration d = Duration.ofDays(dias).plusHours(horas).plusMinutes(minutos);
+        servico.setTempoEstimado(d);
+    }
+
+    // ======= MÉTODOS DE AÇÃO =======
+
     public void salvar() {
-       if (servico.getId() == null) {
+        atualizarTempoEstimado();
+
+        if (servico.getId() == null) {
             servico.setAtivo(true);
             servicoServico.salvar(servico);
             Mensagem.mensagemInfo("Serviço cadastrado com sucesso!");
@@ -66,30 +103,9 @@ public class ManagerServico implements Serializable {
             servicoServico.atualizar(servico);
             Mensagem.mensagemInfo("Serviço atualizado com sucesso!");
         }
+
         instanciar();
     }
 
-    
-    public void pesquisar() {
-        System.out.println("Nome Do Serviço: " + servico.getNome());
-        servicos = servicoServico.findAll();
-
-        // Verificando o conteúdo da lista
-        if (servicos == null || servicos.isEmpty()) {
-            System.out.println("Nenhum serviço encontrado.");
-        } else {
-            System.out.println("Serviços encontrados: " + servicos.size());
-        }
-    }
-    
-  
-    
-    
-    
-    
-    
-    
-
-    
-
+   
 }

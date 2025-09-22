@@ -117,6 +117,7 @@ public class ManagerCliente implements Serializable {
 
             // 🚀 Resetar o formulário para evitar exibição de dados antigos
             cliente = new Cliente();
+            cliente.setEndereco(new Endereco()); 
             tipoCliente = null;
 
         } catch (Exception e) {

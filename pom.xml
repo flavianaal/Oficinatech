@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.programe</groupId>
@@ -53,43 +55,49 @@
             <version>42.5.0</version>
         </dependency>
 
-        <!-- PrimeFaces 11 (Compatível com JSF 2.3 e Payara 5) -->
+        <!-- PrimeFaces 11 -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>11.0.0</version>
         </dependency>
 
-        <!-- SLF4J para Logging -->
+        <!-- SLF4J API + Logback (sem duplicidade) -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.36</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-
-        <!-- Logback (Opcional) -->
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.6</version>
+        </dependency>
+
+        <!-- Payara (se necessário para empacotar) -->
+        <dependency>
+            <groupId>fish.payara.distributions</groupId>
+            <artifactId>payara</artifactId>
+            <version>5.2022.5</version>
+            <type>zip</type>
+        </dependency>
+
+        <!-- WebJars para Bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.3.3</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Plugin para compilar o código-fonte -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
 
-            <!-- Plugin para empacotamento WAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

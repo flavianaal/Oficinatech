@@ -48,7 +48,8 @@ public class OrdemDeServico implements Serializable {
     public OrdemDeServico() {
     }
 
-    public OrdemDeServico(Long id, Cliente cliente, Veiculo veiculo, LocalDate dataEntrada, LocalDate dataprevistaEntrega, StatusOrdemDeServico status, String observacoes, BigDecimal valorTotal, boolean ativo, List<Servico> servicos) {
+    public OrdemDeServico(Long id, Cliente cliente, Veiculo veiculo, LocalDate dataEntrada, 
+            LocalDate dataprevistaEntrega, StatusOrdemDeServico status, String observacoes, BigDecimal valorTotal, boolean ativo, List<Servico> servicos) {
         this.id = id;
         this.cliente = cliente;
         this.veiculo = veiculo;

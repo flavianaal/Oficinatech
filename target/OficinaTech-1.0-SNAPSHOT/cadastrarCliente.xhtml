@@ -1,30 +1,35 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="layoutSite.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>Clientes</title>
-    </h:head>
-    <h:body>
+    <ui:define name="cabecalho">
+        Cadastro de Clientes
+    </ui:define>
+
+    <ui:define name="conteudo">
         <h:form>
             <p:growl/>
-            <p:menubar >
-                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
-            </p:menubar>
-            <!-- Coluna 1: Cadastro de Cliente -->
-            <div class="card">
-                <h3>Cadastro do Cliente</h3>
-                <p:splitter style="height: 500px" styleClass="mb-5" widgetVar="splitter">
+
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <p:menubar>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
+                </p:menubar>
+
+                <p:splitter style="height: 600px" styleClass="mb-5" layout="horizontal">
+                    <!-- Painel Esquerdo - Dados do Cliente -->
                     <p:splitterPanel style="margin-left: 20px; margin-right: 20px;" 
                                      styleClass="flex align-items-center justify-content-center">
                         <h:panelGroup>
+                            <p:spacer height="2" />
                             <h4>Dados Pessoais</h4>
-                            <!-- Tipo de Cliente -->
+                            <p:spacer height="2" />
+
                             <p:panelGrid columns="2" styleClass="form-grid"> 
-                                <p:outputLabel for="tipoCliente" value=" Tipo de Cliente: " />
+                                <p:outputLabel for="tipoCliente" value="Tipo de Cliente:" />
                                 <p:selectOneMenu id="tipoCliente" value="#{managerCliente.tipoCliente}" required="true">
                                     <f:selectItem itemLabel="Selecione" itemValue="" />
                                     <f:selectItem itemLabel="Pessoa Física" itemValue="F" />
@@ -32,126 +37,85 @@
                                     <p:ajax listener="#{managerCliente.selecionetipoCliente()}" update="cpfPanel cnpjPanel" />
                                 </p:selectOneMenu>
                             </p:panelGrid>
-                            <p:spacer height="20" />
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <p:outputLabel value="Nome: "/>
-                                    <p:inputText value="#{managerCliente.cliente.nome}"  required="true"/> 
-                                </div>
-                            </div>
-                            <p:spacer height="20" />
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <p:outputLabel value="Telefone: "/>
-                                    <p:inputMask  mask="(99) 99999-9999" value="#{managerCliente.cliente.telefone}"/>
-                                </div>
-                            </div>
-                            <p:spacer height="20" />
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <p:outputLabel value="Email: "/>
-                                    <p:inputMask value="#{managerCliente.cliente.email}"/>
-                                </div>
-                            </div>
+                            <hr class="sidebar-divider"/>
 
-                            <!-- Campos de Pessoa Física -->
-                            <p:spacer height="20" />
+                            <p:outputLabel value="Nome:"/>
+                            <p:inputText value="#{managerCliente.cliente.nome}" required="true"/> 
+                            <hr class="sidebar-divider"/>
+
+                            <p:outputLabel value="Telefone:"/>
+                            <p:inputMask mask="(99) 99999-9999" value="#{managerCliente.cliente.telefone}"/>
+
+                            <hr class="sidebar-divider"/>
+                            <p:outputLabel value="Email:"/>
+                            <p:inputText value="#{managerCliente.cliente.email}"/>
+                            <hr class="sidebar-divider"/>
+                            <!-- Pessoa Física -->
                             <h:panelGroup id="cpfPanel">
                                 <h:panelGroup rendered="#{managerCliente.tipoCliente eq 'F'}">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <p:outputLabel value="CPF: " />
-                                            <p:inputMask id="cpf" value="#{managerCliente.cliente.CPF}" mask="999.999.999-99" />
-                                        </div>
-                                    </div>
+                                    <p:spacer height="10" />
+                                    <p:outputLabel value="CPF:"/>
+                                    <p:inputMask id="cpf" value="#{managerCliente.cliente.CPF}" mask="999.999.999-99" />
                                 </h:panelGroup>
                             </h:panelGroup>
 
-                            <!-- CNPJ e Razão Social (Pessoa Jurídica) -->
-                            <p:spacer height="20" />
+                            <!-- Pessoa Jurídica -->
                             <h:panelGroup id="cnpjPanel">
                                 <h:panelGroup rendered="#{managerCliente.tipoCliente eq 'J'}">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <p:outputLabel value="CNPJ: " />
-                                            <p:inputMask id="cnpj" value="#{managerCliente.cliente.CNPJ}" mask="99.999.999/9999-99" />
-                                        </div>
-                                        <p:spacer height="20" />
-                                        <div class="form-group">
-                                            <p:outputLabel value="Razão Social: " />
-                                            <p:inputText id="razaoSocial" value="#{managerCliente.cliente.razaoSocial}" />
-                                        </div>
-                                    </div>
+                                    <p:spacer height="10" />
+                                    <p:outputLabel value="CNPJ:"/>
+                                    <p:inputMask id="cnpj" value="#{managerCliente.cliente.CNPJ}" mask="99.999.999/9999-99" />
+                                    <hr class="sidebar-divider"/>
+                                    <p:spacer height="10" />
+                                    <p:outputLabel value="Razão Social:"/>
+                                    <p:inputText id="razaoSocial" value="#{managerCliente.cliente.razaoSocial}" />
                                 </h:panelGroup>
                             </h:panelGroup>
-
                         </h:panelGroup>
                     </p:splitterPanel>
+
+                    <!-- Painel Direito - Endereço -->
                     <p:splitterPanel style="margin-left: 20px; margin-right: 20px;" 
                                      styleClass="flex align-items-center justify-content-center">
                         <h:panelGroup>
-                            <div class="row" columns="1">
-                                <h4>Endereço do Cliente</h4>
+                            <p:spacer height="2" />
+                            <h4>Endereço do Cliente</h4>
+                            <p:spacer height="2" />
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel  value="CEP: "/>
-                                        <p:inputMask mask="99999-999" value="#{managerCliente.cliente.endereco.CEP}" />
-                                    </div>
-                                </div>
-                                <p:spacer height="20" />
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel value="Logradouro: "/>
-                                        <p:inputText value="#{managerCliente.cliente.endereco.logradouro}" />
-                                    </div>
-                                </div>
-                                <p:spacer height="20" />
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel value="Bairro: "/>
-                                        <p:inputText value="#{managerCliente.cliente.endereco.bairro}" />
-                                    </div>
-                                </div>
-                                <p:spacer height="20" />
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel value="Número: "/>
-                                        <p:inputText  value="#{managerCliente.cliente.endereco.numero}" type="number" required="true" />
-                                    </div>
-                                </div>
-                                <p:spacer height="20" />
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel value="Estado: "/>
-                                        <p:selectOneMenu value="#{managerCliente.cliente.endereco.estado}" converter="estadoconverter">
-                                            <f:selectItem itemLabel="-- Selecione um estado --" itemValue="" />
-                                            <f:selectItems value="#{managerEndereco.estados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}" />
-                                        </p:selectOneMenu>
+                            <p:outputLabel value="CEP:"/>
+                            <p:inputMask mask="99999-999" value="#{managerCliente.cliente.endereco.CEP}" />
+                            <hr class="sidebar-divider"/>
 
-                                    </div>
-                                </div> 
-                                <p:spacer height="20" />
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <p:outputLabel value="Cidade: "/>
-                                        <p:inputText value="#{managerCliente.cliente.endereco.cidade}" />
-                                    </div>
-                                </div>  
+                            <p:outputLabel value="Logradouro:"/>
+                            <p:inputText value="#{managerCliente.cliente.endereco.logradouro}" />
+                            <hr class="sidebar-divider"/>
 
-                            </div>
-                        </h:panelGroup> 
+                            <p:outputLabel value="Bairro:"/>
+                            <p:inputText value="#{managerCliente.cliente.endereco.bairro}" />
+                            <hr class="sidebar-divider"/>
+
+                            <p:outputLabel value="Número:"/>
+                            <p:inputText value="#{managerCliente.cliente.endereco.numero}" type="number" required="true" />
+
+                            <hr class="sidebar-divider"/>
+                            <p:outputLabel value="Estado:"/>
+                            <p:selectOneMenu value="#{managerCliente.cliente.endereco.estado}" converter="estadoconverter">
+                                <f:selectItem itemLabel="-- Selecione um estado --" itemValue="" />
+                                <f:selectItems value="#{managerEndereco.estados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}" />
+                            </p:selectOneMenu>
+
+                            <hr class="sidebar-divider"/>
+                            <p:outputLabel value="Cidade:"/>
+                            <p:inputText value="#{managerCliente.cliente.endereco.cidade}" />
+                        </h:panelGroup>
                     </p:splitterPanel>
                 </p:splitter>
+
                 <hr/>
                 <center style="margin: 10px">
                     <p:commandButton value="Salvar" actionListener="#{managerCliente.salvar()}" icon="pi pi-save" update="@form"/>
-                </center>  
+                </center>
             </div>
-
-
         </h:form>
-    </h:body>
-</html>
-
-
+    </ui:define>
+</ui:composition>
